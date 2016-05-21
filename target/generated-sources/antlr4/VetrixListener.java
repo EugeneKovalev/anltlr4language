@@ -76,4 +76,34 @@ public interface VetrixListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumber(VetrixParser.NumberContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VetrixParser#bool_var}.
+	 * @param ctx the parse tree
+	 */
+	void enterBool_var(VetrixParser.Bool_varContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#bool_var}.
+	 * @param ctx the parse tree
+	 */
+	void exitBool_var(VetrixParser.Bool_varContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VetrixParser#if_condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_condition(VetrixParser.If_conditionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#if_condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_condition(VetrixParser.If_conditionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VetrixParser#while_condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_condition(VetrixParser.While_conditionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#while_condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_condition(VetrixParser.While_conditionContext ctx);
 }

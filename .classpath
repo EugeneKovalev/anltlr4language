@@ -7,5 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/OVERLORD/Desktop/antlr-4.5.3/lib/antlr-4.5.3-complete.jar"/>
+	<classpathentry kind="lib" path="stringtemplate-3.2.1.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

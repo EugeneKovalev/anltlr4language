@@ -2,9 +2,15 @@ grammar Vetrix;
 
 @parser::members {
 	java.util.Hashtable varMap = new java.util.Hashtable();
+	public class FooException extends Exception {
+	public FooException() { super(); }
+	public FooException(String message) { super(message); System.out.println(message);}
+	public FooException(String message, Throwable cause) { super(message, cause); }
+	public FooException(Throwable cause) { super(cause); }
+}
 }
 
-runProgram:(assign|number|print|calculateVectors|arythmVectors|vector)*;
+runProgram:(assign|number|print|calculateVectors|arythmVectors|vector|if_condition|while_condition)*;
 
 assign returns [Double value]:	
 	var=ID EQUALS (num=number{
@@ -20,10 +26,22 @@ PRINT_EXP: PRINT L_C_BR ID R_C_BR;
 print : exp=PRINT_EXP {
 		String varName = $exp.text.split("[\\(\\)]")[1];
 		try{
-			System.out.println((Double)varMap.get(varName));
+			Double number = (Double)varMap.get(varName);
+			if(number == null){
+				throw new FooException("Print Error!");
 			}
+			System.out.println(number);
+		}
+		catch(FooException ex1){}
 		catch(Exception ex){
-			System.out.println((ArrayList)varMap.get(varName));
+			ArrayList list = (ArrayList)varMap.get(varName);
+			if(list == null){
+				try{
+					throw new FooException("Print Error!");
+				}
+				catch(FooException ex1){}
+			}
+			System.out.println(list);
 		}
 	};
 
@@ -139,6 +157,38 @@ number returns  [Double value]
 		$value = (Double)varMap.get(varName);
 	};
 
+bool_var returns [Boolean value]
+	: num1=number '>' num2=number{
+		$value = ($num1.value > $num2.value);
+	}
+	| num3=number '==' num4=number{
+		$value = ($num3.value == $num4.value); 
+	}
+	| num5=number '<' num6=number{
+		$value = ($num5.value < $num6.value); 
+	};
+
+if_condition : var=BULLSHIT {};
+
+CONDITION: L_C_BR NUMBER COND_SYMBOL NUMBER R_C_BR;
+
+
+
+COND_SYMBOL: '>' | '<' | '==';
+
+//if_condition : IF L_C_BR bool=bool_var R_C_BR L_U_BR R_U_BR {System.out.println("Qwerty");};
+
+//if_condition : IF L_C_BR bool=bool_var R_C_BR L_U_BR 
+//	(
+//		assign
+//		|number
+//		|print
+//		|calculateVectors
+//		|arythmVectors
+//		|vector
+//	)* R_U_BR;
+
+
 VAR_NUMBER: L_T_BR NUMBER_TYPE WS ID R_T_BR;
 VAR_VECTOR: L_T_BR VECTOR_TYPE WS ID R_T_BR;
 
@@ -157,6 +207,8 @@ L_C_BR: '(';
 R_C_BR: ')';
 L_T_BR: '<';
 R_T_BR: '>';
+L_U_BR: '{';
+R_U_BR: '}';
 NUMBER : ('-')?('0'..'9')+ ('.' ('0'..'9')+)?; // float number
 WS  :   (' ' | '\t' | '\r'| '\n') -> channel(HIDDEN); // Ignore WhiteSpace characters
 ID:  ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*; // match lower-case identifiers
@@ -165,10 +217,34 @@ ID:  ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*; // match lower-c
 COMMA: ',';
 SEMICOLON: ';';
 
-
-
 //Operations:
 PLUS: '+';
 EQUALS: '=';
 MINUS: '-';
 MULT: '*';
+
+//Conditions
+IF: 'if';
+WHILE: 'while';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BULLSHIT: IF CONDITION '{var10=[1,2,3,4,5] var10=var10*4}';
+
+
+while_condition : var=BITCHES {};
+
+BITCHES: WHILE '(i=0; i<10; i++){var10=[1,2,3,4,5] var777=var10*5 var10=var10*4}';
