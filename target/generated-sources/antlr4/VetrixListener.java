@@ -27,26 +27,6 @@ public interface VetrixListener extends ParseTreeListener {
 	 */
 	void exitAssign(VetrixParser.AssignContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link VetrixParser#variable}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariable(VetrixParser.VariableContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link VetrixParser#variable}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariable(VetrixParser.VariableContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link VetrixParser#number}.
-	 * @param ctx the parse tree
-	 */
-	void enterNumber(VetrixParser.NumberContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link VetrixParser#number}.
-	 * @param ctx the parse tree
-	 */
-	void exitNumber(VetrixParser.NumberContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link VetrixParser#print}.
 	 * @param ctx the parse tree
 	 */
@@ -86,4 +66,14 @@ public interface VetrixListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVector(VetrixParser.VectorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VetrixParser#number}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumber(VetrixParser.NumberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#number}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumber(VetrixParser.NumberContext ctx);
 }

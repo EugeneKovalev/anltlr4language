@@ -4,7 +4,7 @@ grammar Vetrix;
 	java.util.Hashtable varMap = new java.util.Hashtable();
 }
 
-runProgram:(assign|variable|number|print|calculateVectors|arythmVectors|vector)*;
+runProgram:(assign|number|print|calculateVectors|arythmVectors|vector)*;
 
 assign returns [Double value]:	
 	var=ID EQUALS (num=number{
@@ -14,19 +14,7 @@ assign returns [Double value]:
 		varMap.put($var.text, $vec.values);
 	}
 	)
-;
-
-variable returns [Double value]
-    :    var=ID {$value = (Double)varMap.get($var.text);}
-    ;
-
-number returns  [Double value]
-	: input1 = NUMBER {
-		$value = Double.parseDouble($input1.text);
-	}
-	| input2 = ID {
-		$value = (Double)varMap.get($input2.text);
-	};
+; 
 	
 PRINT_EXP: PRINT L_C_BR ID R_C_BR;
 print : exp=PRINT_EXP {
@@ -133,15 +121,42 @@ vector returns [List<Double> values]
 			moduledValues.add(Math.abs(vector.get(i)));
 		} 
 		$values = moduledValues;
+	}
+	/*<Vector vector_var>*/
+	| exp3=VAR_VECTOR {
+		String varName = $exp3.text.split("<Vector")[1].trim();
+		varName = varName.split(">")[0];
+		$values = (ArrayList)varMap.get(varName);
+	};
+	
+number returns  [Double value]
+	: input1 = NUMBER {
+		$value = Double.parseDouble($input1.text);
+	}
+	| input2 = VAR_NUMBER{
+		String varName = $input2.text.split("<Number")[1].trim();
+		varName = varName.split(">")[0];
+		$value = (Double)varMap.get(varName);
 	};
 
-VECTOR: L_BR (NUMBER COMMA)+ NUMBER R_BR;
+VAR_NUMBER: L_T_BR NUMBER_TYPE WS ID R_T_BR;
+VAR_VECTOR: L_T_BR VECTOR_TYPE WS ID R_T_BR;
+
+
+VECTOR: L_BR (NUMBER COMMA)+ NUMBER R_BR; 
+
+//Types
+NUMBER_TYPE: 'Number';
+VECTOR_TYPE: 'Vector';
+PRINT: 'print';
 
 STICK: '|';
 L_BR: '[';
 R_BR: ']';
 L_C_BR: '(';
 R_C_BR: ')';
+L_T_BR: '<';
+R_T_BR: '>';
 NUMBER : ('-')?('0'..'9')+ ('.' ('0'..'9')+)?; // float number
 WS  :   (' ' | '\t' | '\r'| '\n') -> channel(HIDDEN); // Ignore WhiteSpace characters
 ID:  ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*; // match lower-case identifiers
@@ -150,9 +165,7 @@ ID:  ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*; // match lower-c
 COMMA: ',';
 SEMICOLON: ';';
 
-//Types
-VECTOR_TYPE: 'Vector';
-PRINT: 'print';
+
 
 //Operations:
 PLUS: '+';
