@@ -15,6 +15,18 @@ public class VetrixBaseListener implements VetrixListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRunProgram(VetrixParser.RunProgramContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRunProgram(VetrixParser.RunProgramContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAssign(VetrixParser.AssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -63,13 +75,37 @@ public class VetrixBaseListener implements VetrixListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRunProgram(VetrixParser.RunProgramContext ctx) { }
+	@Override public void enterCalculateVectors(VetrixParser.CalculateVectorsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRunProgram(VetrixParser.RunProgramContext ctx) { }
+	@Override public void exitCalculateVectors(VetrixParser.CalculateVectorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArythmVectors(VetrixParser.ArythmVectorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArythmVectors(VetrixParser.ArythmVectorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVector(VetrixParser.VectorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVector(VetrixParser.VectorContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

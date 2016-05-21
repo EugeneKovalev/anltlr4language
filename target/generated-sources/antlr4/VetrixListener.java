@@ -7,6 +7,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface VetrixListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link VetrixParser#runProgram}.
+	 * @param ctx the parse tree
+	 */
+	void enterRunProgram(VetrixParser.RunProgramContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#runProgram}.
+	 * @param ctx the parse tree
+	 */
+	void exitRunProgram(VetrixParser.RunProgramContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link VetrixParser#assign}.
 	 * @param ctx the parse tree
 	 */
@@ -47,13 +57,33 @@ public interface VetrixListener extends ParseTreeListener {
 	 */
 	void exitPrint(VetrixParser.PrintContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link VetrixParser#runProgram}.
+	 * Enter a parse tree produced by {@link VetrixParser#calculateVectors}.
 	 * @param ctx the parse tree
 	 */
-	void enterRunProgram(VetrixParser.RunProgramContext ctx);
+	void enterCalculateVectors(VetrixParser.CalculateVectorsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link VetrixParser#runProgram}.
+	 * Exit a parse tree produced by {@link VetrixParser#calculateVectors}.
 	 * @param ctx the parse tree
 	 */
-	void exitRunProgram(VetrixParser.RunProgramContext ctx);
+	void exitCalculateVectors(VetrixParser.CalculateVectorsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VetrixParser#arythmVectors}.
+	 * @param ctx the parse tree
+	 */
+	void enterArythmVectors(VetrixParser.ArythmVectorsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#arythmVectors}.
+	 * @param ctx the parse tree
+	 */
+	void exitArythmVectors(VetrixParser.ArythmVectorsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VetrixParser#vector}.
+	 * @param ctx the parse tree
+	 */
+	void enterVector(VetrixParser.VectorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#vector}.
+	 * @param ctx the parse tree
+	 */
+	void exitVector(VetrixParser.VectorContext ctx);
 }
