@@ -7,25 +7,25 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface VetrixListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link VetrixParser#calculateVectors}.
+	 * Enter a parse tree produced by {@link VetrixParser#assign}.
 	 * @param ctx the parse tree
 	 */
-	void enterCalculateVectors(VetrixParser.CalculateVectorsContext ctx);
+	void enterAssign(VetrixParser.AssignContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link VetrixParser#calculateVectors}.
+	 * Exit a parse tree produced by {@link VetrixParser#assign}.
 	 * @param ctx the parse tree
 	 */
-	void exitCalculateVectors(VetrixParser.CalculateVectorsContext ctx);
+	void exitAssign(VetrixParser.AssignContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link VetrixParser#arythmVectors}.
+	 * Enter a parse tree produced by {@link VetrixParser#variable}.
 	 * @param ctx the parse tree
 	 */
-	void enterArythmVectors(VetrixParser.ArythmVectorsContext ctx);
+	void enterVariable(VetrixParser.VariableContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link VetrixParser#arythmVectors}.
+	 * Exit a parse tree produced by {@link VetrixParser#variable}.
 	 * @param ctx the parse tree
 	 */
-	void exitArythmVectors(VetrixParser.ArythmVectorsContext ctx);
+	void exitVariable(VetrixParser.VariableContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link VetrixParser#number}.
 	 * @param ctx the parse tree
@@ -37,13 +37,23 @@ public interface VetrixListener extends ParseTreeListener {
 	 */
 	void exitNumber(VetrixParser.NumberContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link VetrixParser#vector}.
+	 * Enter a parse tree produced by {@link VetrixParser#print}.
 	 * @param ctx the parse tree
 	 */
-	void enterVector(VetrixParser.VectorContext ctx);
+	void enterPrint(VetrixParser.PrintContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link VetrixParser#vector}.
+	 * Exit a parse tree produced by {@link VetrixParser#print}.
 	 * @param ctx the parse tree
 	 */
-	void exitVector(VetrixParser.VectorContext ctx);
+	void exitPrint(VetrixParser.PrintContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VetrixParser#runProgram}.
+	 * @param ctx the parse tree
+	 */
+	void enterRunProgram(VetrixParser.RunProgramContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#runProgram}.
+	 * @param ctx the parse tree
+	 */
+	void exitRunProgram(VetrixParser.RunProgramContext ctx);
 }
