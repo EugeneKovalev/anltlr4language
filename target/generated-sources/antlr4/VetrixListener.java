@@ -97,6 +97,26 @@ public interface VetrixListener extends ParseTreeListener {
 	 */
 	void exitIf_condition(VetrixParser.If_conditionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link VetrixParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(VetrixParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(VetrixParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VetrixParser#function_call}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction_call(VetrixParser.Function_callContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VetrixParser#function_call}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction_call(VetrixParser.Function_callContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link VetrixParser#while_condition}.
 	 * @param ctx the parse tree
 	 */

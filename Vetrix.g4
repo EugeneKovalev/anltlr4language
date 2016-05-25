@@ -2,15 +2,18 @@ grammar Vetrix;
 
 @parser::members {
 	java.util.Hashtable varMap = new java.util.Hashtable();
+	boolean isFunction = false;
+	private MyParser parser = new MyParser();
+	
 	public class FooException extends Exception {
-	public FooException() { super(); }
-	public FooException(String message) { super(message); System.out.println(message);}
-	public FooException(String message, Throwable cause) { super(message, cause); }
-	public FooException(Throwable cause) { super(cause); }
-}
+		public FooException() { super(); }
+		public FooException(String message) { super(message); System.out.println(message);}
+		public FooException(String message, Throwable cause) { super(message, cause); }
+		public FooException(Throwable cause) { super(cause); }
+	}
 }
 
-runProgram:(assign|number|print|calculateVectors|arythmVectors|vector|if_condition|while_condition)*;
+runProgram:(assign|number|print|calculateVectors|arythmVectors|vector|if_condition|while_condition|function|function_call)*;
 
 assign returns [Double value]:	
 	var=ID EQUALS (num=number{
@@ -30,7 +33,7 @@ print : exp=PRINT_EXP {
 			if(number == null){
 				throw new FooException("Print Error!");
 			}
-			System.out.println(number);
+			parser.makePrintFunction(Double.toString(number), isFunction);
 		}
 		catch(FooException ex1){}
 		catch(Exception ex){
@@ -39,9 +42,16 @@ print : exp=PRINT_EXP {
 				try{
 					throw new FooException("Print Error!");
 				}
-				catch(FooException ex1){}
+				catch(FooException ex1){
+					
+				}
 			}
-			System.out.println(list);
+			String str = "";
+			for(int i=0; i < list.size(); i++){
+				str += list.get(i) + " ";
+			}
+			
+			parser.makePrintFunction(str, isFunction);
 		}
 	};
 
@@ -170,6 +180,37 @@ bool_var returns [Boolean value]
 
 if_condition : var=BULLSHIT {};
 
+
+
+
+//длинна чары
+function
+	: {List<String> args = new ArrayList<>(); isFunction = true;}
+		'Function -' ID {String funcId = $ID.text;}':' (ID{args.add($ID.text);})* NL*
+	    'Start:'{parser.makeFunctionHeader(funcId, args); String retId = "";}
+	        (NL
+	        |function_call
+	        | assign
+	        |number
+	        |print
+	        |calculateVectors
+	        |arythmVectors
+	        |vector
+	        |if_condition
+	        |while_condition
+	        )*
+	    'Return:' (ID{retId = $ID.text;})? '.'
+	    {parser.makeFunctionReturn(retId);}{ isFunction = false;}
+	;
+
+function_call
+    	:
+    		{List<String> args = new ArrayList<>();}
+    	    ID{String funcId = $ID.text;} '(' ((ID{args.add($ID.text);}) (',' ID{args.add($ID.text);})*)* ')' NL*
+    	    {parser.parseFunctionCall(funcId, args, isFunction);}
+    	;
+
+
 CONDITION: L_C_BR NUMBER COND_SYMBOL NUMBER R_C_BR;
 
 
@@ -227,23 +268,9 @@ MULT: '*';
 IF: 'if';
 WHILE: 'while';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+NL : '\n';
 
 BULLSHIT: IF CONDITION '{var10=[1,2,3,4,5] var10=var10*4}';
-
 
 while_condition : var=BITCHES {};
 

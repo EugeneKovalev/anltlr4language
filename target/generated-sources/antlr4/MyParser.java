@@ -24,15 +24,21 @@ public class MyParser {
 
     private VariableMemory variableMemory;
     private FunctionMemory functionMemory;
-    private File outputFile;
-    private File functionFile;
-
+    public static File outputFile;
+    public static File functionFile;
+    public static File funcClasses;
 
     public MyParser() {
         variableMemory = new VariableMemory();
         functionMemory = new FunctionMemory();
-        outputFile = new File("/mnt/common/Sasha/Univer/3 курс/ОС/Compiler/Output.java");
-        functionFile = new File("/mnt/common/Sasha/Univer/3 курс/ОС/Compiler/func/Functions.java");
+        //System.out.println("INIT");
+        outputFile = new File("C:/Users/OVERLORD/Documents/Java Eclipse/ANTLR Vetrix/target/generated-sources/antlr4/Output.java");
+        functionFile = new File("C:/Users/OVERLORD/Documents/Java Eclipse/ANTLR Vetrix/target/generated-sources/antlr4/Output.java");
+        funcClasses = new File("C:/Users/OVERLORD/Documents/Java Eclipse/ANTLR Vetrix/target/generated-sources/antlr4/FuncClasses.java");
+        writeInFile("public class FuncClasses{", funcClasses);
+        writeInFile("public class Output{ \n public Output(){ \n", outputFile);
+        
+        //System.out.println(outputFile);
     }
 
     public void parse(File file) {
@@ -113,14 +119,14 @@ public class MyParser {
     }
 
     public void makePrintFunction(String value, boolean isPrintInOtherFunction) {
-        //System.out.println("System.out.println(" + value + ");");
+        System.out.println(value);
         try {
             if (variableMemory.isVariableExists(value))
                 value = variableMemory.getValueOfVariable(value);
             if (!isPrintInOtherFunction) {
-                writeInFile("    System.out.println(" + value + ");", outputFile);
+                writeInFile("    System.out.println(\"" + value + "\");", outputFile);
             } else
-                writeInFile("    System.out.println(" + value + ");", functionFile);
+                writeInFile("    System.out.println(\"" + value + "\");", funcClasses);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -207,7 +213,7 @@ public class MyParser {
         return value.contains("(") && value.contains(")");
     }
 
-    private void writeInFile(String str, File file) {
+    public static void writeInFile(String str, File file) {
         try {
             FileWriter writer = new FileWriter(file, true);
             writer.write(str + "\n");
@@ -267,7 +273,8 @@ public class MyParser {
         }
         functionSignature.append(")");
         functionSignature.append("{");
-        writeInFile(functionSignature.toString(), functionFile);
+        //writeInFile(functionSignature.toString(), functionFile);
+        writeInFile(functionSignature.toString(), funcClasses);
     }
 
     private void createInputVarsForFunction(List<String> args) {
@@ -283,15 +290,15 @@ public class MyParser {
 
     public void makeFunctionReturn(String retId) {
         if (retId.equals(""))
-            writeInFile("    return  \"\";", functionFile);
+            writeInFile("    return  \"\";", funcClasses);
         else
-            writeInFile("    return " + retId + ";", functionFile);
-        writeInFile("  }", functionFile);
+            writeInFile("    return " + retId + ";", funcClasses);
+        writeInFile("  }", funcClasses);
     }
 
     public void parseFunctionCall(String funcId, List<String> args, boolean isFunction) {
-
-        if (functionMemory.isFunctionExists(funcId, args.size())) {
+    	System.out.println("func call");
+        //if (functionMemory.isFunctionExists(funcId, args.size())) {
             List<String> values = new ArrayList<>();
             try {
                 for (String oneArg : args) {
@@ -303,10 +310,10 @@ public class MyParser {
             }
             String argsList = args.toString().replace("[", "").replace("]", "");
             if (isFunction)
-                writeInFile("      " + funcId + "(" + argsList + ");", functionFile);
+                writeInFile("      " +  funcId + "(" + argsList + ");", functionFile);
             else
-                writeInFile("      " + funcId + "(" + argsList + ");", outputFile);
-        }
+                writeInFile("      FuncClasses." + funcId + "(" + argsList + ");", outputFile);
+        //}
 
 //        StringBuilder functionSignature = new StringBuilder();
 //        functionSignature.append("  public static String ").append(funcId).append(" (");
